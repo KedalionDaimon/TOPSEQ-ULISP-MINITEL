@@ -2,7 +2,7 @@ TOPSEQ SYSTEM / ULISP 4.7 ON ARDUINO MEGA2560 DRIVING A FRENCH MINITEL
 
 by Nino Ivanov, April 2025
 
-This is a modification of David Johnson-Davies' uLisp interpreter for Arduino MEGA2560 AVR-based microcontroller boards running on French Minitel-terminals, endowed with a (simplistic) "symbolic artificial intelligence". (Check www.ulisp.com for one of the most amazing Lisp systems running on devices from Arduino UNO to Teensy 4.1 boards and many more, like ESP32 varieties etc. Absolutely amazing!)
+This is a modification derived from David Johnson-Davies' uLisp interpreter for Arduino MEGA2560 AVR-based microcontroller boards running on French Minitel-terminals, endowed herein as an extra with a (simplistic) "symbolic artificial intelligence". (Check www.ulisp.com for one of the most amazing Lisp systems running on devices from Arduino UNO to Teensy 4.1 boards and many more, like ESP32 varieties etc. Absolutely amazing!)
 
 The .ino-file is ready to flash on an Arduino MEGA2560 board and will give you the uLisp interpreter straight with an "artificial intelligence" that I call a "topic sequencer" and that will "just work" on a Minitel. (The variant topseq...lisp gives you a variant that will run on conventional systems like ECL, SBCL, GCL etc.; the variant ulisptopseq...lisp gives you the variant that could be manually pasted into uLisp on the Arduino MEGA2560, should you prefer to manually enter the system into uLisp, rather than to pre-load it as an .ino-file.)
 
