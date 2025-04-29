@@ -1,0 +1,67 @@
+(defvar *knowledge* '())
+(defvar *knowledge-length* 24)
+(defvar *user-input* '())
+
+(defun prn (whatever) (progn (princ whatever) (terpri)))
+
+(defun generate-knowledge ()
+  (let ((knowledge-length *knowledge-length*) (increase-counter 0))
+  (loop (cond ((zerop knowledge-length) (return '())))
+        (decf knowledge-length)
+        (setq increase-counter (+ 10 icn))
+        (push (mapcar (lambda (x) (+ x increase-counter))
+                      '(0 1 2 3 4 5 6 7 8 9))
+              *knowledge*))))
+
+(defun update-knowledge-with-element (element)
+  (let ((res (list element)))
+  (progn
+  (loop (push (pop *knowledge*) res)
+        (cond ((null (cadr *knowledge*)) (return (pop *knowledge*)))))
+  (loop (cond ((null res) (return '()))
+              (t (push (pop res) *knowledge*)))))))
+
+(defun find-in-knowledge-and-print (element)
+  (let ((counter 0) (knowledge-element '()))
+  (loop (cond ((equal counter *knowledge-length*) (return '())))
+        (setq knowledge-element (nth counter *knowledge*))
+        (cond ((eq element (car knowledge-element))
+                 (progn (princ "> ") (prn knowledge-element))))
+        (incf counter))))
+
+(defun check-and-update-knowledge (element)
+  (let ((transformed-element '()))
+  (update-knowledge-with-element
+    (loop (cond ((null element) (return (reverse transformed-element)))
+                ((listp (car element))
+                   (progn (find-in-knowledge-and-print (caar element))
+                          (push (car (pop element)) transformed-element)))
+                (t (push (pop element) transformed-element)))))))
+
+(defun run ()
+(progn
+(setq *knowledge* '())
+(generate-knowledge)
+(terpri)
+(prn "(INPUT A LIST OF SYMBOLS TO BE PLACED IN KNOWLEDGE OF 24 SENTENCES)")
+(prn "(THE FIRST WORD IS THE TOPIC OF THAT SENTENCE)")
+(prn "(PLACE ANY SYMBOL OF THAT SENTENCE WITHIN PARENTHESES)")
+(prn "(IF YOU WISH TO FIND SENTENCES CONTAINING IT IN THE KNOWLEDGE)")
+(prn "(FOR INSTANCE (JOHN LOVES MARY) IS A POSSIBLE INPUT SENTENCE)")
+(prn "(WHEREAS (MARY (LOVES) (JOHN)) WILL PRINT ALL SENTENCES WHICH)")
+(prn "(HAVE AS THEIR TOPICS EITHER LOVES OR JOHN)")
+(prn "(ANY ((TOPIC)) IN DOUBLE PARENTHESES CANNOT BE FOUND WHICH MAY BE)")
+(prn "(USEFUL IF A SENTENCE SHALL ONLY ASK BUT NEVER BE FOUND ITSELF)")
+(prn "(ENTER () TO TERMINATE  AND (()) TO SEE KNOWLEDGE)")
+(prn "(ENTER A SINGLE SYMBOL NOT LIST TO SEE THE AVAILABLE ROOM)")
+(terpri)
+(loop
+  (princ ": ") (finish-output nil) (setq *user-input* (read))
+  (cond ((null *user-input*) (return '()))
+        ((not (listp *user-input*)) (progn (gc) (prn (room))))
+        ((and (null (car *user-input*)) (null (cdr *user-input*)))
+           (pprint *knowledge*))
+        (t (check-and-update-knowledge *user-input*))))))
+
+(run)
+

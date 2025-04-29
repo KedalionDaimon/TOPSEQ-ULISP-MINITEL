@@ -1,0 +1,71 @@
+(defvar knw '())
+(defvar kln 20)
+(defvar uin '())
+
+(defun prn (wht) (progn (princ wht) (terpri)))
+
+(defun gkn ()
+  (let ((kle kln) (icn 0))
+  (loop (cond ((zerop kle) (return '())))
+        (decf kle)
+        (setq icn (+ 10 icn))
+        (push (mapcar (lambda (x) (+ x icn)) '(0 1 2 3 4 5 6 7 8 9)) knw))))
+
+(defun upd (ele)
+  (let ((res (list ele)))
+  (progn
+  (loop (push (pop knw) res)
+        (cond ((null (cadr knw)) (return (pop knw)))))
+  (loop (cond ((null res) (return '()))
+              (t (push (pop res) knw)))))))
+
+(defun fnd (ele)
+  (let ((ctr 0) (kel '()))
+  (loop (cond ((eq ctr kln) (return '())))
+        (setq kel (nth ctr knw))
+        (cond ((eq ele (car kel))
+                 (progn (princ "> ") (prn kel))))
+        (incf ctr))))
+
+(defun cup (ele)
+  (let ((tfe '()))
+  (upd
+    (loop (cond ((null ele) (return (reverse tfe)))
+                ((listp (car ele))
+                   (progn (fnd (caar ele))
+                          (push (car (pop ele)) tfe)))
+                (t (push (pop ele) tfe)))))))
+
+(defun run ()
+(progn
+(setq knw '())
+(gkn)
+(terpri)
+(prn "(INPUT A LIST OF SYMBOLS TO BE)")
+(prn "(PUT IN KNOWLEDGE OF 20 SENTENCES)")
+(prn "(THE FIRST WORD IS THE TOPIC)")
+(prn "(OF THAT SENTENCE TO FIND SENTENCES)")
+(prn "(PLACE ANY SYMBOL OF THAT SENTENCE)")
+(prn "(WITHIN PARENTHESES FOR INSTANCE)")
+(prn "((JOHN LOVES MARY) IS SIMPLE INPUT)")
+(prn "(WHEREAS (MARY (LOVES) (JOHN)))")
+(prn "(WILL PRINT ALL SENTENCES WHICH)")
+(prn "(HAVE AS THEIR TOPICS LOVES OR JOHN)")
+(prn "(ANY ((TOPIC)) IN DOUBLE PARENTHESES)")
+(prn "(CANNOT BE FOUND WHICH MAY BE)")
+(prn "(USEFUL TO ONLY ASK BUT NEVER BE FOUND)")
+(prn "(THE ROOM IS PRINTED AT EACH PROMPT)")
+(prn "(ENTER () TO TERMINATE (()) TO SEE)")
+(prn "(KNOWLEDGE AND TO REMOVE TOPSEQ FROM)")
+(prn "(THE SESSION OR AFTER A CRASH RUN)")
+(prn "((MAPCAR #'MAKUNBOUND (GLOBALS)))")
+(terpri)
+(loop
+  (gc nil) (princ (room)) (princ ": ") (setq uin (read))
+  (cond ((null uin) (return '()))
+        ((and (null (car uin)) (null (cdr uin))) (prn knw))
+        (t (cup uin))))))
+
+(run)
+
+
